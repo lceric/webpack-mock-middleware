@@ -1,22 +1,23 @@
 const cwdPath = process.cwd();
-const path = require("path");
 const fs = require("fs");
-const { Log } = require("./utils");
-module.exports = (req, res, next, config) => {
+const path = require("path");
+module.exports = (req, res, next) => {
   let mockPath = path.join(cwdPath, "mock" + req.path + ".js");
-  Log(mockPath);
   delete require.cache[mockPath];
   fs.open(mockPath, "r", err => {
     if (err) {
       if (err.code === "ENOENT") {
-        Log(req.path + "接口--------不走mock");
+        console.warn("[fail mock] " + req.path);
         next();
         return;
       }
       throw err;
     }
-    let resData = require(mockPath);
-    Log(resData);
+    let generateMock = require(mockPath)
+    let isFun = typeof generateMock === "function"
+    let resData = isFun ?
+        generateMock(req, res, next)
+        : generateMock;
     res.json({ ...resData });
   });
 };
