@@ -1,0 +1,17 @@
+{
+  "name": "webpack-mock-middleware",
+  "version": "1.0.0",
+  "description": "webpack中处理mock数据",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webpack",
+    "dev-server",
+    "mock"
+  ],
+  "author": "Eric",
+  "email": "18709270892@163.com",
+  "license": "ISC"
+}
