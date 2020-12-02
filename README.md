@@ -1,6 +1,6 @@
-# webpack-mock-middleware
+# mock-middleware
 
-webpack 工程处理 mock 数据中间件
+前端工程处理 mock 数据中间件
 [介绍](https://strun.club/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
 
 [工作图](https://strun.club/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
@@ -11,7 +11,7 @@ mock 目录建立与服务地址对应，如/api/user -> mock/api/user.js
 
 ```bash
 # install
-npm i -D webpack-mock-middleware
+npm i -D mock-middleware
 
 # use
 require('webpack-mock-middleware')
@@ -112,7 +112,7 @@ module.exports = req => {
   };
 };
 ```
-### 提供mock.js,接入webpack-mock-middleware
+### 提供mock.js,接入mock-middleware
 #### 准备
 ```bash
 # package.json中的script加入mock启动标识
@@ -134,7 +134,7 @@ process.env.npm_config_mock
 ```js
 // mock.js
 const isMock = process.env.npm_config_mock;
-const eMock = require('webpack-mock-middleware')
+const eMock = require('mock-middleware')
 module.exports = app => {
   if (isMock) {
     app.all("/api/*", function(req, res, next) {
