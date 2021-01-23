@@ -1,13 +1,8 @@
 # webpack-mock-middleware
+在webpack开发模式，该中间件配合`devServer.before`提供了一种快速本地mock数据的方案。
+mock目录下为数据js，与接口地址相对应，如`axios.get('/api/user')` -> mock目录下`api/user.js`
 
-webpack 工程处理 mock 数据中间件
-[介绍](https://strun.club/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
-
-[工作图](https://strun.club/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
-
-# 用法
-
-mock 目录建立与服务地址对应，如/api/user -> mock/api/user.js
+## 用法
 
 ```bash
 # install
@@ -17,34 +12,28 @@ npm i -D webpack-mock-middleware
 require('webpack-mock-middleware')
 ```
 
-> webpack before
-
-```js
-// mock.js
-const isMock = process.env.npm_config_mock;
-const eMock = require('./e-mock-middle.js');
-module.exports = app => {
-  if (isMock) {
-    app.all("/api/*", function(req, res, next) {
-      eMock(req, res, next);
-    });
-  }
-};
-
-// vue.config.js devServer
-const mockProxy = require('mock.js');
+#### 启动
+```bash
+# package.json中的script加入mock启动标识
 {
-  devServer: {
-    before: mockProxy,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "dev": "npm run serve",
+    "dev:mock": "npm run dev --mock"
   }
 }
+# 启动
+npm run dev:mock
+# 也可以
+npm run dev --mock
+
+# 可通过此判断是否mock模式启动
+process.env.npm_config_mock
 
 ```
 
-# Demo
 
-> vue cli3 构建项目
-> 下面是工程目录
+## 示例
 
 ### 工程目录
 
@@ -58,12 +47,37 @@ const mockProxy = require('mock.js');
 
 ```
 
+**mock/mock.js**
+```js
+// mock.js
+const eMock = require('webpack-mock-middleware')
+const isMock = process.env.npm_config_mock
+module.exports = app => {
+  if (isMock) {
+    app.all('/api/*', function(req, res, next) {
+      console.log('---', req.path)
+      eMock(req, res, next)
+    })
+  }
+}
+```
+**vue.config.js**
+```
+// vue.config.js devServer
+const mockProxy = require('mock.js');
+{
+  devServer: {
+    before: mockProxy,
+  }
+}
+
+```
 ### mock 数据示例
 
 #### 数据
 
 ```js
-// api/user.js
+// mock/api/user.js
 module.exports = {
   data: [
     {
@@ -87,7 +101,7 @@ module.exports = {
 #### 动态数据
 
 ```js
-// api/queryuser.js
+// mock/api/queryuser.js
 module.exports = req => {
   // TODO 此处可以通过传参，动态组织返回数据
   // 此处有三个参数req,res,next, 具体查看epress文档
@@ -111,49 +125,4 @@ module.exports = req => {
     message: filterRes.length ? '获取成功' : '暂无数据'
   };
 };
-```
-### 提供mock.js,接入webpack-mock-middleware
-#### 准备
-```bash
-# package.json中的script加入mock启动标识
-{
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "dev": "npm run serve",
-    "dev:mock": "npm run dev --mock"
-  }
-}
-# 启动
-npm run dev:mock
-
-# 判断是否已mock模式启动可通过此获取
-process.env.npm_config_mock
-
-```
-#### mock.js接入
-```js
-// mock.js
-const isMock = process.env.npm_config_mock;
-const eMock = require('webpack-mock-middleware')
-module.exports = app => {
-  if (isMock) {
-    app.all("/api/*", function(req, res, next) {
-      eMock(req, res, next);
-    });
-  }
-};
-
-```
-### webpack接入
-> 在这里以vue.config.js示例
-```js
-// vue.config.js
-
-const mockProxy = require('mock.js');
-{
-  devServer: {
-    before: mockProxy,
-  }
-}
-
 ```
