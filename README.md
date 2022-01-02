@@ -1,9 +1,9 @@
 # webpack-mock-middleware
 
 webpack 工程处理 mock 数据中间件
-[介绍](https://strun.club/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
+[介绍](https://lceric.com/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
 
-[工作图](https://strun.club/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
+[工作图](https://lceric.com/#/article?articleid=94e45ab8ab7d11e9ac1d00163e055a14)
 
 # 用法
 
