@@ -108,7 +108,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const mockMiddleware = require('webpack-mock-middleware')
 
 const setupMiddlewares = mockMiddleware({
-  mockDir: path.join(__dirname, 'mock'),
+  // mockDir: path.join(__dirname, 'mock'),
   // mock: false,
   // prefix: '/mock/*',
   // middlewares: []
