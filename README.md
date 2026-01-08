@@ -1,4 +1,6 @@
+
 # webpack-mock-middleware
+[![npm package](https://img.shields.io/npm/v/webpack-mock-middleware.svg?style=flat-square)](https://www.npmjs.org/package/webpack-mock-middleware) [![NPM downloads](http://img.shields.io/npm/dm/webpack-mock-middleware.svg?style=flat-square)](http://www.npmtrends.com/webpack-mock-middleware) 
 
 Implement local mock data in webpack5 by configuring `devServer.setupMiddlewares`.
 
